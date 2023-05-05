@@ -31,7 +31,7 @@ K8S 기반의 컨테이너 환경 혹은 VM 환경에서 dev-ops 엔지니어 �
 
 ### [MVL(한국, 서울)](https://mvlchain.io/) | 정규직
 
-EV바이크 관리 플랫폼 [ONION](https://en.onionev.com/HOME)
+[TADA](https://tada.global/) AND [ONION](https://en.onionev.com/HOME)
 
 2022.09 ~ 현재
 
