@@ -39,16 +39,6 @@ insert into account values (4, 'justin', 13);
 insert into account values (5, 'tom', 14);
 ```
 
-# lost update test
-
-## purpose
-
-## prerequisite
-
-## test
-
-## conclusion
-
 # dirty read test
 
 ## purpose
@@ -72,11 +62,6 @@ play-ground=# select id, name from account where id = 1;
 ```sql
 play-ground=# start transaction isolation level read uncommitted;
 START TRANSACTION
-play-ground=# show transaction isolation level;
- transaction_isolation
------------------------
- read uncommitted
-(1 row)
 play-ground=# select id, name from account where id = 1;
  id | name
 ----+------
@@ -89,11 +74,6 @@ play-ground=# select id, name from account where id = 1;
 ```sql
 play-ground=# start transaction isolation level read committed;
 START TRANSACTION
-play-ground=# show transaction isolation level;
- transaction_isolation
------------------------
- read committed
-(1 row)
 play-ground=# update account set name = 'brad' where id = 1;
 UPDATE 1
 play-ground=# select id, name from account where id = 1;
@@ -104,6 +84,7 @@ play-ground=# select id, name from account where id = 1;
 ```
 
 * session A
+
 ```sql
 play-ground=# select id, name from account where id = 1;
  id | name
@@ -151,12 +132,6 @@ play-ground=# select id, name from account where id = 1;
 play-ground=# start transaction isolation level read committed;
 START TRANSACTION
 play-ground=# select id, name from account where id = 1;
-play-ground=# show transaction isolation level;
- transaction_isolation
------------------------
- read committed
-(1 row)
-play-ground-# ;
  id | name
 ----+------
   1 | john
@@ -168,15 +143,10 @@ play-ground-# ;
 ```sql
 play-ground=# start transaction isolation level read committed;
 START TRANSACTION
-play-ground=# select id, name from account where id = 1;
-play-ground=# show transaction isolation level;
- transaction_isolation
------------------------
- read committed
-(1 row)
 play-ground=# update account set name = 'brad' where id = 1;
 UPDATE 1
 play-ground=# commit;
+COMMIT
 ```
 
 * session A
@@ -194,6 +164,70 @@ COMMIT
 ## conclusion
 
 first transaction이 실행 도중에 second transaction이 해당 row를 update했으므로 repeatable read를 실행했을 때 해당 row가 변경된 것을 확인 할 수 있다.
+
+# protection from dirty read and non repeatable read test
+
+## purpose
+
+transaction isolation level를 repeatable read를 올림으로써 non repeatable read가 발생하지 않는지 확인한다.
+
+## prerequisite
+
+```sql
+play-ground=# select id, name from account where id = 1;
+ id | name
+----+------
+  1 | brad
+(1 row)
+```
+
+## test
+
+* session A
+
+```sql
+play-ground=# start transaction isolation level repeatable read;
+START TRANSACTION
+play-ground=# select id, name from account where id = 1;
+ id | name
+----+------
+  1 | brad
+(1 row)
+```
+
+* session B
+
+```sql
+play-ground=# start transaction isolation level read committed;
+START TRANSACTION
+play-ground=# update account set name = 'john' where id = 1;
+UPDATE 1
+play-ground=# select id, name from account where id = 1;
+ id | name
+----+------
+  1 | john
+(1 row)
+play-ground=# commit;
+COMMIT
+```
+
+* session A
+
+```sql
+play-ground=# select id, name from account where id = 1;
+ id | name
+----+------
+  1 | brad
+(1 row)
+```
+
+## conclusion
+
+first transaction에서 id 1을 read 하면 brad가 출력된다. 그런데 second transaction 에서 id를 john으로 update 한 후에도 first transaction에서 id 1을 read 하면 brad가 출력된다. 즉, repeatable read가 가능하게 된 것을 확인하였다. 
+
+## notice
+
+session C를 생성하여 id 1을 read하면 second transaction commit의 결과물은 john이 출력된다. 즉 실제로 second transaction은 commit된 것이다. 그러므로 이건 오히려 dirty read라고 느껴진다. 그렇다면 사실 repeatable read를 사용하는 의미가 있나 의구심이 든다.
 
 # phantom read test
 
@@ -222,11 +256,6 @@ play-ground=# select id, age from account where age between 10 and 20;
 ```sql
 play-ground=# start transaction isolation level read committed;
 START TRANSACTION
-play-ground=# show transaction isolation level;
- transaction_isolation
------------------------
- read committed
-(1 row)
 play-ground=# select id, age from account where age between 10 and 20;
  id | age
 ----+-----
@@ -243,11 +272,6 @@ play-ground=# select id, age from account where age between 10 and 20;
 ```sql
 play-ground=# start transaction isolation level read committed;
 START TRANSACTION
-play-ground=# show transaction isolation level;
- transaction_isolation
------------------------
- read committed
-(1 row)
 play-ground=# INSERT INTO account (id, name, age) VALUES (6, 'brad', 15);
 INSERT 0 1
 play-ground=# commit;
