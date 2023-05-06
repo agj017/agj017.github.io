@@ -1,11 +1,11 @@
 ---
 layout: post
-title: test-postgresql-transaction
+title: test-buffer-locking-postgresql-transaction
 date: 2023-05-06
 category: test for postgresql
 ---
 
-## prerequisite
+# prerequisite
 
 * login DB
 
@@ -33,26 +33,28 @@ create table account
 * DML
 ```sql
 insert into account values (1, null, 'john');
+insert into account values (2, null, 'jacob');
 ```
 
-## buffer test
+# buffer test
 
-* purpose
+## purpose
 
 각 transaction은 buffer memory(disk로부터 가져온 data 저장소)가 아닌 각 자의 memory에서 작업하는 것을 확인한다.
 
-* prerequisite
+## prerequisite
 
 ```sql
-play-ground=# select * from account;
+play-ground=# select * from account where id = 1;
  id | history | name
 ----+---------+------
   1 |         | john
 (1 row)
 ```
 
+## test
 
-* session A
+1. session A
 ```sql
 play-ground=# start transaction;
 START TRANSACTION
@@ -71,7 +73,7 @@ play-ground=# select * from account where id = 1;
 (1 row)
 ```
 
-* session B
+2. session B
 ```sql
 play-ground=# start transaction;
 START TRANSACTION
@@ -82,13 +84,13 @@ play-ground=# select * from account where id = 1;
 (1 row)
 ```
 
-* session A
+3. session A
 ```sql 
 play-ground=# commit;
 COMMIT
 ```
 
-* session B
+4. session B
 ```sql
 play-ground=# select * from account where id = 1;
  id | history | name
@@ -97,27 +99,29 @@ play-ground=# select * from account where id = 1;
 (1 row)
 ```
 
-* conclusion
+## conclusion
 
 session A는 자신의 memory에서 작업을 하였으므로 commit하기 전까지 session B는 id 1에 대한 name이 john으로 보이는 걸 확인 할 수 있다.
 
-## locking test
+# locking test
 
-* purpose
+## purpose
 
 두 transaction이 하나의 row에 접근하여 write할 경우에 먼저 접근한 transaction이 해당 row에 lock을 거는 것을 확인한다.
 
-* prerequisite
+## prerequisite
 
 ```sql
-play-ground=# select * from account;
+play-ground=# select * from account where id = 1;
  id | history | name
 ----+---------+------
   1 |         | john
 (1 row)
 ```
 
-* session A
+## test
+
+1. session A
 
 ```sql
 play-ground=# start transaction;
@@ -131,7 +135,7 @@ play-ground=# select * from account where id = 1;
 (1 row)
 ```
 
-* session B
+2. session B
 
 ```sql
 play-ground=# start transaction;
@@ -146,19 +150,95 @@ play-ground=# update account set name = 'lucas' where id = 1;
 ...(locking)
 ```
 
-* session A
+3. session A
 
 ```sql
 play-ground=# commit;
 COMMIT
 ```
 
-* session B
+4. session B
 ```sql
 ...(unlock)
 UPDATE 1
 ```
 
-* conclusion
+## conclusion
 
 session A가 id 1에 대해서 transaction 안에서 write를 할 때 session B가 해당 row에 대해서 write를 시도하면 session B는 locking 되는 것을 확인 할 수 있고 session A가 commit 되는 순간 session B의 write 작업이 자동으로 실행되는 것을 확인 할 수 있다.
+
+# deadlock test
+
+## purpose
+
+두 transaction 각각 하나의 row에 lock을 걸고 각각의 transaction이 lock이 걸린 row에 write를 하는 경우 deadlock err가 발생하는 것을 확인한다.
+
+## prerequisite
+
+```sql
+play-ground=# select id, name from account where id = 1 or id = 2;
+ id | name
+----+-------
+  1 | john
+  2 | jacob
+(2 rows)
+```
+
+## test
+
+1. session A
+
+```sql
+play-ground=# start transaction;
+START TRANSACTION
+play-ground=# update account set name = 'tom' where id = 1;
+UPDATE 1
+```
+
+2. session B
+
+```sql
+START TRANSACTION
+play-ground=# update account set name = 'lucas' where id = 2;
+UPDATE 1
+```
+
+3. session A
+
+```sql
+play-ground=# update account set name = 'jackson' where id = 2;
+...(locking)
+```
+
+4. session B
+```sql
+play-ground=# update account set name = 'peter' where id = 1;
+ERROR:  deadlock detected
+DETAIL:  Process 31106 waits for ShareLock on transaction 2383786; blocked by process 30713.
+Process 30713 waits for ShareLock on transaction 2383787; blocked by process 31106.
+HINT:  See server log for query details.
+CONTEXT:  while updating tuple (0,21) in relation "account"
+```
+
+5. session A
+```sql
+...(unlock)
+UPDATE 1
+play-ground=# commit;
+COMMIT
+play-ground=# select id, name from account where id = 1 or id = 2;
+ id |  name
+----+---------
+  1 | tom
+  2 | jackson
+```
+
+6. session B
+```sql
+play-ground=# commit;
+ROLLBACK
+```
+
+## conclusion
+
+session A는 id 1에 lock을 걸고 session B는 id 2에 lock을 걸고 있는 상황에서 session A가 id 2에 lock을 시도하면 waiting이 발생한다. 그 상황에서 session B가 id 1에 lock을 시도하면 두 session B는 dead lock err가 발생하게 된다. session A의 transaction은 commit되지만 session B의 transaction은 rollback이 된다.
