@@ -2,7 +2,7 @@
 layout: post
 title: test-buffer-locking-postgresql-transaction
 date: 2023-05-06
-category: test for postgresql
+category: test-for-postgresql
 ---
 
 # prerequisite
@@ -54,7 +54,8 @@ play-ground=# select * from account where id = 1;
 
 ## test
 
-1. session A
+* session A
+
 ```sql
 play-ground=# start transaction;
 START TRANSACTION
@@ -63,7 +64,6 @@ play-ground=# select * from account where id = 1;
 ----+---------+------
   1 |         | john
 (1 row)
-
 play-ground=# update account set name = 'tom' where id = 1;
 UPDATE 1
 play-ground=# select * from account where id = 1;
@@ -73,7 +73,8 @@ play-ground=# select * from account where id = 1;
 (1 row)
 ```
 
-2. session B
+* session B
+
 ```sql
 play-ground=# start transaction;
 START TRANSACTION
@@ -84,13 +85,15 @@ play-ground=# select * from account where id = 1;
 (1 row)
 ```
 
-3. session A
+* session A
+
 ```sql 
 play-ground=# commit;
 COMMIT
 ```
 
-4. session B
+* session B
+
 ```sql
 play-ground=# select * from account where id = 1;
  id | history | name
@@ -121,7 +124,7 @@ play-ground=# select * from account where id = 1;
 
 ## test
 
-1. session A
+* session A
 
 ```sql
 play-ground=# start transaction;
@@ -135,7 +138,7 @@ play-ground=# select * from account where id = 1;
 (1 row)
 ```
 
-2. session B
+* session B
 
 ```sql
 play-ground=# start transaction;
@@ -145,19 +148,19 @@ play-ground=# select * from account where id = 1;
 ----+---------+------
   1 |         | john
 (1 row)
-
 play-ground=# update account set name = 'lucas' where id = 1;
 ...(locking)
 ```
 
-3. session A
+* session A
 
 ```sql
 play-ground=# commit;
 COMMIT
 ```
 
-4. session B
+* session B
+
 ```sql
 ...(unlock)
 UPDATE 1
@@ -186,7 +189,7 @@ play-ground=# select id, name from account where id = 1 or id = 2;
 
 ## test
 
-1. session A
+* session A
 
 ```sql
 play-ground=# start transaction;
@@ -195,7 +198,7 @@ play-ground=# update account set name = 'tom' where id = 1;
 UPDATE 1
 ```
 
-2. session B
+* session B
 
 ```sql
 START TRANSACTION
@@ -203,14 +206,15 @@ play-ground=# update account set name = 'lucas' where id = 2;
 UPDATE 1
 ```
 
-3. session A
+* session A
 
 ```sql
 play-ground=# update account set name = 'jackson' where id = 2;
 ...(locking)
 ```
 
-4. session B
+* session B
+
 ```sql
 play-ground=# update account set name = 'peter' where id = 1;
 ERROR:  deadlock detected
@@ -220,7 +224,8 @@ HINT:  See server log for query details.
 CONTEXT:  while updating tuple (0,21) in relation "account"
 ```
 
-5. session A
+* session A
+
 ```sql
 ...(unlock)
 UPDATE 1
@@ -233,7 +238,8 @@ play-ground=# select id, name from account where id = 1 or id = 2;
   2 | jackson
 ```
 
-6. session B
+* session B
+
 ```sql
 play-ground=# commit;
 ROLLBACK
