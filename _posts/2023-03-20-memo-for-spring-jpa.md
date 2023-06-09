@@ -1,6 +1,6 @@
 ---
 layout: post
-title: memo for jpa
+title: memo for spring jpa
 date: 2023-03-26
 category: memo
 ---
