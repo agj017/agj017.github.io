@@ -6,6 +6,14 @@ category: memo
 ---
 
 ```shell
+### plugins
+plugins=(git
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	z
+)
+
+
 ###terminal###
 alias ll="ls -al --color=auto"
 
