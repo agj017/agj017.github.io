@@ -106,7 +106,7 @@ play-ground=# select * from account where id = 1;
 
 session A는 자신의 memory에서 작업을 하였으므로 commit하기 전까지 session B는 id 1에 대한 name이 john으로 보이는 걸 확인 할 수 있다.
 
-# locking test
+# locking test (isolation level: READ COMMITTED)
 
 ## purpose
 
@@ -169,6 +169,57 @@ UPDATE 1
 ## conclusion
 
 session A가 id 1에 대해서 transaction 안에서 write를 할 때 session B가 해당 row에 대해서 write를 시도하면 session B는 locking 되는 것을 확인 할 수 있고 session A가 commit 되는 순간 session B의 write 작업이 자동으로 실행되는 것을 확인 할 수 있다.
+
+# locking test (isolation level: REAPEATABLE READ)
+
+## purpose
+
+isolation level이 REAPEATABLE READ인 두 transaction이 하나의 row에 접근하여 write 할 경우에 먼저 접근한 transaction이 commit하면 이후 접근한 transaction은 err를 발생시키는 것을 확인한다. 
+
+## prerequisite
+
+```sql
+play-ground=# select * from account where id = 1;
+ id | history | name
+----+---------+------
+  1 |         | john
+(1 row)
+```
+
+## test
+
+* session A
+```sql
+play-ground=# start transaction isolation level repeatable read;
+START TRANSACTION
+play-ground=# update account set name = 'John' where id = 1;
+UPDATE 1
+play-ground=#
+```
+
+* session B
+```sql
+play-ground=# start transaction isolation level repeatable read;
+START TRANSACTION
+play-ground=# update account set name = 'Top' where id = 1;
+(waiting)
+```
+
+* session A
+```sql
+play-ground=# commit;
+COMMIT
+```
+
+* session B
+```sql
+(waiting)
+ERROR:  could not serialize access due to concurrent update
+```
+
+## conclusion
+
+isolation level이 REAPEATABLE READ인 두 transaction이 하나의 row에 접근하여 write 할 경우에 먼저 접근한 transaction이 commit하면 이후 접근한 transaction의 statement는 err를 발생시키고 실행되지 않는다.
 
 # deadlock test
 
