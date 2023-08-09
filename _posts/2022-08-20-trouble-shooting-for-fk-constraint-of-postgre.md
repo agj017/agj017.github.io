@@ -1,7 +1,7 @@
 ---
 layout: post
 title: trouble-shooting-for-fk-constraint-of-postgre
-date: 2023-08-20
+date: 2022-08-20
 category: trouble-shooting
 ---
 
