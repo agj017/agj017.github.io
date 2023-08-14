@@ -16,3 +16,5 @@ category: memo
 * brew install iterm2
 
 * brew install ripgrep
+
+* brew install jq
