@@ -30,6 +30,11 @@ alias gtree="git log --pretty=oneline --graph --decorate --all"
 
 alias gbDl="gcm && git branch | grep -v main | xargs git branch -D"
 
+function gsync {
+    git fetch origin
+    git reset --hard origin/$(git branch --show-current)
+}
+
 ###homebrew###
 alias b="brew"
 
