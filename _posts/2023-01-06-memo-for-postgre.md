@@ -18,5 +18,25 @@ category: memo
 * back up table 
 
 ```sql
-create table {table name for backup} as (select * from {table name to be backuped})
+CREATE TABLE {table name for backup} AS (SELECT * FROM {table name to be backuped})
+```
+## postgresql meta data
+
+* path where data is stored
+```sql
+SHOW data_directory;
+```
+
+* meta data for each database in postgresql
+
+the oid of the table is mapped with directory name.
+
+```sql
+SELECT * FROM pg_database;
+```
+
+* meta data of index, sequence, primary key
+
+```sql
+SELECT * FROM pg_class;
 ```
