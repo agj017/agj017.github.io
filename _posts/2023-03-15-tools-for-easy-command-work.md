@@ -18,3 +18,6 @@ category: memo
 * brew install ripgrep
 
 * brew install jq
+
+* brew install lazygit
+
