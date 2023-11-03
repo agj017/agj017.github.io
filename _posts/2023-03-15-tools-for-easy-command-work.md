@@ -24,3 +24,5 @@ category: memo
 * brew install lazygit
 
 * brew install watchman
+
+* brew install rbenv
