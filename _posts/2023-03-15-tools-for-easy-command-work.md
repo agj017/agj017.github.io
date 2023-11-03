@@ -21,3 +21,6 @@ category: memo
 
 * brew install lazygit
 
+* brew install lazygit
+
+* brew install watchman
