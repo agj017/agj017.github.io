@@ -46,6 +46,7 @@ int main() {
 ```
 
 * 실행결과
+
 ```shell
 The address of the variable 'num' is: 0x16fc3eed8
 ```
@@ -73,7 +74,7 @@ int a = -1;
 
 * Assembly code
 
-```asm
+```c
 	.section	__TEXT,__text,regular,pure_instructions
 	.build_version macos, 13, 0	sdk_version 14, 0
 	.section	__DATA,__data
@@ -103,7 +104,7 @@ float a = 1;
 
 * Assembly code
 
-```asm
+```c
 	.section	__TEXT,__text,regular,pure_instructions
 	.build_version macos, 13, 0	sdk_version 14, 0
 	.section	__DATA,__data
@@ -133,13 +134,14 @@ _a:
 
 ## Method
 
-정적타입 언어는 아래와 code에 직접 type을 명시하여 compiler에게 type 정보를 알린다. 즉, 아래의 코드에 `int`로 인해서 compiler는 해당 변수의 type을 알아낼수 있다.
+정적타입 언어는 아래와 같이 code에 직접 type을 명시하여 compiler에게 type 정보를 알린다. 즉, 아래의 코드의 'int'로 인해서 compiler는 해당 변수의 type을 알아낼수 있다.
 
 ```c
 int a = -1;
 ```
 
 동적타입 언어는 literal를 통해서 interpreter에게 type 정보를 알린다. 즉, 아래의 코드에 '-1'로 인해서 interpreter는 해당 변수의 type을 알아낼수 있다.
+
 ```javascript
 const a = -1;
 ```
