@@ -73,7 +73,7 @@ int a = -1;
 
 * Assembly code
 
-```assembly
+```asm
 	.section	__TEXT,__text,regular,pure_instructions
 	.build_version macos, 13, 0	sdk_version 14, 0
 	.section	__DATA,__data
@@ -103,7 +103,7 @@ float a = 1;
 
 * Assembly code
 
-```assembly
+```asm
 	.section	__TEXT,__text,regular,pure_instructions
 	.build_version macos, 13, 0	sdk_version 14, 0
 	.section	__DATA,__data
