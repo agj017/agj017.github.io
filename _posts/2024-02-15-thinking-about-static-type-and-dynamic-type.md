@@ -53,7 +53,7 @@ The address of the variable 'num' is: 0x16fc3eed8
 
 # What is type
 
-타입이란 memory에 data를 저장하는 방법이다. data를 저장하기 위해서 3가지 정보가 필요하다. 
+타입이란 memory에 data를 저장하기 위한 정보이다. data를 저장하기 위해서 3가지 정보가 필요하다. 
 
 * address
 
