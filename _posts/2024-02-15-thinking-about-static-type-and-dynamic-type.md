@@ -94,12 +94,12 @@ _a:
 
 * `.long 4294967295 ; 0xffffffff` -> integer로 데이터 저장
 
-## Float type
+## Double type
 
 * C code
 
 ```c
-float a = 1;
+double a = 1;
 ```
 
 * Assembly code
