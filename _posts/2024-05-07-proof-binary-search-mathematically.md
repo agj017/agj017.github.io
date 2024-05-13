@@ -1,7 +1,7 @@
 ---
 layout: post
 title: proof-binary-search-mathematically
-date: 2024-02-15
+date: 2024-05-07
 category: mathematic
 ---
 
