@@ -345,7 +345,8 @@ log-include-validator-duties-enabled: true
 
 ## 명령어 실행 후 console
 
-```2024-07-23T06:02:45.176057Z main INFO Configuring logging for destination: console and file
+```sh
+2024-07-23T06:02:45.176057Z main INFO Configuring logging for destination: console and file
 2024-07-23T06:02:45.186567Z main INFO Logging file location: ./tekudata/logs/teku.log
 2024-07-23T06:02:45.186695Z main INFO Logging includes events: true
 2024-07-23T06:02:45.186760Z main INFO Logging includes validator duties: true
