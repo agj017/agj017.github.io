@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2024-10-11-chain-of-trust
+title: chain-of-trust
 date: 2024-10-11
 category: security
 ---
@@ -20,8 +20,6 @@ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
 ```
 
 ## 0.3 print the root certificate
-
-`
 
 - Data session을 sha256로 hashing 후 private key(`rootCA.key`)로 RSAEncryption를 실행하여 Signature에 입력됨 (이를 self sign이라고 함)
 
@@ -185,7 +183,7 @@ cat rootCA.srl
 
 - Subject는 `CN=MyLeafCertificate`로 입력됨
 
--- Serial Number는 `rootCA.srl`의 값이 입력됨
+- Serial Number는 `rootCA.srl`의 값이 입력됨
 
 ```sh
 openssl x509 -in leaf.crt -text -noout
@@ -252,7 +250,7 @@ Certificate:
 
 - leaf.crt 의 `Signature Value`를 `rootCA.crt`의 public key로 복호화
 
-- 첫번째 값과 두번째 값이 같으면 veridation 통과
+- 첫번째 값과 두번째 값이 같으면 verify check 통과
 
 ```sh
 openssl verify -CAfile rootCA.crt leaf.crt
