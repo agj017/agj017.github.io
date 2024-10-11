@@ -21,7 +21,7 @@ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
 
 ## 0.3 print the root certificate
 
-- Data session을 sha256로 hashing 후 private key(`rootCA.key`)로 RSAEncryption를 실행하여 Signature에 입력됨 (이를 self sign이라고 함)
+- Data section을 sha256로 hashing 후 private key(`rootCA.key`)로 RSAEncryption를 실행하여 Signature에 입력됨 (이를 self sign이라고 함)
 
 - Issuer는 `CN=MyRootCA`로 입력됨
 
@@ -105,7 +105,7 @@ openssl req -new -key leaf.key -out leaf.csr -subj "/CN=MyLeafCertificate"
 
 ## 1.3 print the certificate signing request (CSR)
 
-- Data session을 sha256로 hashing 후 private key(`leaf.key`)로 RSAEncryption를 실행하여 Signature에 입력됨
+- Data section을 sha256로 hashing 후 private key(`leaf.key`)로 RSAEncryption를 실행하여 Signature에 입력됨
 
 - Subject `CN=MyLeafCertificate`로 입력됨
 
@@ -177,7 +177,7 @@ cat rootCA.srl
 
 ## 1.6 print the leaf certificate
 
-- Data session을 sha256로 hashing 후 private key(`rootCA.key`)로 RSAEncryption를 실행하여 Signature에 입력됨
+- Data section을 sha256로 hashing 후 private key(`rootCA.key`)로 RSAEncryption를 실행하여 Signature에 입력됨
 
 - Issuer는 `CN=MyRootCA`로 입력됨
 
@@ -246,7 +246,7 @@ Certificate:
 
 # 3. verify the leaf certificate
 
-- leaf.crt 의 `Data` session를 sha256 hashing
+- leaf.crt 의 `Data` section를 sha256 hashing
 
 - leaf.crt 의 `Signature Value`를 `rootCA.crt`의 public key로 복호화
 
