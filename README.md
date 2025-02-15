@@ -91,7 +91,7 @@ Tech Leader
 
 - K8S, RDBMS, NoSQL
 
-- Cloud: AWS, GCP, Firebase
+- AWS, GCP, Firebase
 
 ---
 
