@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me in English
-permalink: /about/
+permalink: /about/resume_en
 ---
 
 # Back-end Engineer | Ahn Gyu-jin

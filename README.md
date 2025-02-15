@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me in Korean
-permalink: /about/
+permalink: /about/resume_ko
 ---
 
 # Back-end engineer |  안규진
