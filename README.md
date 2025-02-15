@@ -66,8 +66,8 @@ Tech Leader
 **Server Developer** 
 
 - 20만 개 이상의 통신 기지국을 관리하는 Docomo 통신 기지국 설비 관리 플랫폼의 개발 및 성공적인 론칭
-- 5만 명 이상의 사용자가 이용하는 호텔 예약 플랫폼 [JWE](https://www.jwe.jp/online/)의 개발과 운영, 시스템 최적화 및 성능 개선
-- 3만 명 이상의 사용자가 이용하는 [주일한국문화원](https://www.koreanculture.jp/index.php) 도서 관리 서비스의 개발 및 지속적인 운영
+- 호텔 예약/결제/정산 플랫폼 [JWE](https://www.jwe.jp/online/)의 개발과 운영, 시스템 최적화 및 성능 개선
+- [주일한국문화원](https://www.koreanculture.jp/index.php) 도서 관리 서비스의 개발 및 지속적인 운영
 
 ### NSENSE(일본, 도쿄) | INTERN
 
