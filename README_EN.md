@@ -19,11 +19,11 @@ permalink: /about/resume_en
 
 ## SUMMARY
 
-An 8-year experienced server developer capable of leading projects flexibly in alignment with business needs.
+An **8-year experienced server developer** capable of **leading projects flexibly** in alignment with business needs.
 
-Proficient in designing scalable code based on OOP principles and developing high-quality software through TDD.
+Proficient in designing **scalable code** based on **OOP principles** and developing **high-quality software** through **TDD**.
 
-Expert in optimizing performance by efficiently utilizing physical resources through memory optimization, load balancing, parallel processing, and caching techniques.
+Expert in **optimizing performance** by efficiently utilizing **physical resources** through **memory optimization**, **load balancing**, **parallel processing**, and **caching techniques**.
 
 ---
 
@@ -31,7 +31,7 @@ Expert in optimizing performance by efficiently utilizing physical resources thr
 
 ### [XIDSOFT (Seoul, South Korea)](https://xidsoft.com/) | Full-time
 
-__Tech Leader__ | Nov 2023 – Present
+**Tech Leader** | Nov 2023 – Present
 
 - Designed, developed, and launched an **AI model training platform** for **video and image processing**.
 - Designed and developed an **AI Video Management System (VMS) for CCTV cameras**, providing real-time video analysis and management features.
@@ -69,9 +69,10 @@ __Tech Leader__ | Nov 2023 – Present
 
 ---
 
-## OPEN SOURCE ACTIVITIES
+## ACTIVITIES
 
-- [**Removed duplicated construct in Web3.js**](https://github.com/web3/web3.js/pull/7150)
+- Side Project - [**AI Searching Wedding Flatform**](https://match-myday.com/)
+- Open source - [**Removed duplicated construct in Web3.js**](https://github.com/web3/web3.js/pull/7150)
 
 ---
 
@@ -92,4 +93,4 @@ __Tech Leader__ | Nov 2023 – Present
 
 ## EDUCATION
 
-- **Bachelor’s Degree in Computer Science** – **Busan University of Foreign Studies** | Feb 2018
+- **Bachelor’s Degree in Computer Engineering** – **Busan University of Foreign Studies** | Feb 2018
