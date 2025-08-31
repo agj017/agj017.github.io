@@ -4,7 +4,7 @@ title: About me in English
 permalink: /about/resume_en
 ---
 
-# Back-end Engineer | Ahn Gyu-jin
+# Back-end Engineer | Q An
 
 ### CONTACT
 
@@ -31,7 +31,7 @@ Expert in optimizing performance by efficiently utilizing physical resources thr
 
 ### [XIDSOFT (Seoul, South Korea)](https://xidsoft.com/) | Full-time
 
-**Tech Leader** | Nov 2023 – Present
+__Tech Leader__ | Nov 2023 – Present
 
 - Designed, developed, and launched an **AI model training platform** for **video and image processing**.
 - Designed and developed an **AI Video Management System (VMS) for CCTV cameras**, providing real-time video analysis and management features.
@@ -92,4 +92,4 @@ Expert in optimizing performance by efficiently utilizing physical resources thr
 
 ## EDUCATION
 
-- **Bachelor’s Degree in Computer Science** – **Busan University of Foreign Studies (BUFS)** | Feb 2018
+- **Bachelor’s Degree in Computer Science** – **Busan University of Foreign Studies** | Feb 2018
